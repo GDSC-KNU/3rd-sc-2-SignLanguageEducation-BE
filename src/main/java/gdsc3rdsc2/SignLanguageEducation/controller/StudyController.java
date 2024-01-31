@@ -1,5 +1,7 @@
 package gdsc3rdsc2.SignLanguageEducation.controller;
 
+import gdsc3rdsc2.SignLanguageEducation.domain.dto.UserJoinRequest;
+import gdsc3rdsc2.SignLanguageEducation.service.UserService;
 import gdsc3rdsc2.SignLanguageEducation.service.StudyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.support.ResourceRegion;
@@ -29,4 +31,16 @@ public class StudyController {
                 .body(resourceRegion);
     }
 
+    @RestController
+    @RequiredArgsConstructor
+    @RequestMapping("/api/user")
+    public static class UserController {
+
+
+        private final UserService userService;
+        @PostMapping("/join")
+        public ResponseEntity<String> join(@RequestBody UserJoinRequest dto){
+            return ResponseEntity.ok().body("success");
+        }
+    }
 }

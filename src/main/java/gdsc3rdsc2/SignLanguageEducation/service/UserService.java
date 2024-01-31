@@ -1,7 +1,7 @@
-package com.gdsc.rdsc2.SignLanguageEducation.service;
+package gdsc3rdsc2.SignLanguageEducation.service;
 
-import com.gdsc.rdsc2.SignLanguageEducation.domain.User;
-import com.gdsc.rdsc2.SignLanguageEducation.repository.UserRepository;
+import gdsc3rdsc2.SignLanguageEducation.domain.User;
+import gdsc3rdsc2.SignLanguageEducation.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

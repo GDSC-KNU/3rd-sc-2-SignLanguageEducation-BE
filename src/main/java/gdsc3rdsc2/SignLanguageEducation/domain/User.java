@@ -1,4 +1,4 @@
-package com.gdsc.rdsc2.SignLanguageEducation.domain;
+package gdsc3rdsc2.SignLanguageEducation.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

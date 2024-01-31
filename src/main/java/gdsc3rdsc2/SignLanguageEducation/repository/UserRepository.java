@@ -1,6 +1,6 @@
-package com.gdsc.rdsc2.SignLanguageEducation.repository;
+package gdsc3rdsc2.SignLanguageEducation.repository;
 
-import com.gdsc.rdsc2.SignLanguageEducation.domain.User;
+import gdsc3rdsc2.SignLanguageEducation.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

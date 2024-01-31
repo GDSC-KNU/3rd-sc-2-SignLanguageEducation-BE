@@ -1,4 +1,4 @@
-package com.gdsc.rdsc2.SignLanguageEducation.domain.dto;
+package gdsc3rdsc2.SignLanguageEducation.domain.dto;
 
 public class UserJoinRequest {
     private String userName;
