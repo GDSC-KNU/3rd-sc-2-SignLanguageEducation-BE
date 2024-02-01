@@ -30,17 +30,4 @@ public class StudyController {
                 .contentType(MediaTypeFactory.getMediaType(resourceRegion.getResource()).orElse(MediaType.APPLICATION_OCTET_STREAM))
                 .body(resourceRegion);
     }
-
-    @RestController
-    @RequiredArgsConstructor
-    @RequestMapping("/api/user")
-    public static class UserController {
-
-
-        private final UserService userService;
-        @PostMapping("/join")
-        public ResponseEntity<String> join(@RequestBody UserJoinRequest dto){
-            return ResponseEntity.ok().body("success");
-        }
-    }
 }
