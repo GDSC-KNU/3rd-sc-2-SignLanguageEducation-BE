@@ -1,16 +1,14 @@
 package gdsc3rdsc2.SignLanguageEducation.domain.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
+@Setter
 public class UserJoinRequest {
 
     private String userName;
     private String password;
-
-
 
 }
