@@ -22,6 +22,10 @@ public class User {
     private String userName;
     private String password;
 
-    @ElementCollection
-    private Map<Long, SentenceStudyStatus> studyStatus;
+    private String refreshToken;
+
+    public void updateRefreshToken(String refreshToken){
+        this.refreshToken = refreshToken;
+    }
+
 }

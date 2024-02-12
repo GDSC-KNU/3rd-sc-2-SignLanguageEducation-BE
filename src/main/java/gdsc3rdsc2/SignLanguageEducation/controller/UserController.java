@@ -1,12 +1,8 @@
 package gdsc3rdsc2.SignLanguageEducation.controller;
 
-import gdsc3rdsc2.SignLanguageEducation.domain.dto.UserDeleteRequest;
-import gdsc3rdsc2.SignLanguageEducation.domain.dto.UserJoinRequest;
-import gdsc3rdsc2.SignLanguageEducation.domain.dto.UserLoginRequest;
+import gdsc3rdsc2.SignLanguageEducation.domain.dto.*;
 import gdsc3rdsc2.SignLanguageEducation.service.UserService;
-import gdsc3rdsc2.SignLanguageEducation.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,14 +18,14 @@ public class UserController {
     @PostMapping("/join")
     public ResponseEntity<String> join(@RequestBody UserJoinRequest dto){
         userService.join(dto.getUserName(),dto.getPassword());
-
+        System.out.println(dto.getUserName()+dto.getPassword());
         return ResponseEntity.ok().body("회원가입을 성공적으로 완료했습니다.");
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> log(@RequestBody UserLoginRequest dto){
-        String token = userService.login(dto.getUserName(),dto.getPassword());
-        return ResponseEntity.ok().body(token);
+        TokenResponse token = userService.login(dto.getUserName(),dto.getPassword());
+        return ResponseEntity.ok().header("AccessToken",token.getAccessToken()).header("RefreshToken",token.getRefreshToken()).body("로그인을 성공적으로 완료했습니다.");
     }
 
     @PostMapping("/delete")
@@ -39,8 +35,14 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public ResponseEntity<String> edit(@RequestBody UserLoginRequest dto){
+    public ResponseEntity<String> edit(){
         return ResponseEntity.ok().body("회원정보를 수정했습니다.");
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<String> refresh(@RequestBody RefreshTokenRequest dto){
+        TokenResponse token = userService.refresh(dto.getRefreshToken());
+        return ResponseEntity.ok().header("AccessToken",token.getAccessToken()).header("RefreshToken",token.getRefreshToken()).body("토큰을 갱신했습니다.");
     }
 
 //    @PostMapping("/test")
