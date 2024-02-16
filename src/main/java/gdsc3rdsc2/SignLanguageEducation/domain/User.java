@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Map;
 
 @Builder
@@ -28,4 +29,11 @@ public class User {
         this.refreshToken = refreshToken;
     }
 
+    @ElementCollection
+    @CollectionTable(name = "user_scripts", joinColumns = @JoinColumn(name = "user_id"))
+    private List<Long> scriptIds;
+
+    @ElementCollection
+    @CollectionTable(name = "user_sentences", joinColumns = @JoinColumn(name = "user_id"))
+    private List<Long> sentenceIds;
 }
