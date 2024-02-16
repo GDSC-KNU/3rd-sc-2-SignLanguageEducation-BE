@@ -6,9 +6,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UserJoinRequest {
-
-    private String userName;
-    private String password;
-
+public class TokenResponse {
+    private String accessToken;
+    private String refreshToken;
 }
