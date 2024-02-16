@@ -4,10 +4,7 @@ import gdsc3rdsc2.SignLanguageEducation.domain.dto.*;
 import gdsc3rdsc2.SignLanguageEducation.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -44,6 +41,19 @@ public class UserController {
         TokenResponse token = userService.refresh(dto.getRefreshToken());
         return ResponseEntity.ok().header("AccessToken",token.getAccessToken()).header("RefreshToken",token.getRefreshToken()).body("토큰을 갱신했습니다.");
     }
+
+    @GetMapping("/idCheck")
+    public Boolean idCheck(@RequestParam String id){
+        return userService.idCheck(id);
+    }
+
+    @GetMapping("/info")
+    public ResponseEntity<UserInfoResponse> info(@RequestHeader("Authorization") String token){
+        return ResponseEntity.ok().body(userService.info(token));
+    }
+
+
+
 
 //    @PostMapping("/test")
 //    public ResponseEntity<String> a(@RequestBody UserLoginRequest dto){
