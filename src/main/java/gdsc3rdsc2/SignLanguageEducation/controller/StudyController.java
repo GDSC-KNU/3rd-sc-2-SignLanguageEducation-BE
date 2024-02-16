@@ -22,7 +22,7 @@ public class StudyController {
 
     @PostMapping("/sentence")
     public Map<String, Long> selectSentence(@RequestBody String sentence){
-        return studyService.choiceSentence(sentence);
+        return studyService.selectSentence(sentence);
     }
 
     @GetMapping("/script")

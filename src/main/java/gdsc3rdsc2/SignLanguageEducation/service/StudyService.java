@@ -29,7 +29,7 @@ public class StudyService {
 
     final long CHUNK_SIZE = 1000000L;
 
-    public Map<String, Long> choiceSentence(String sentence) {
+    public Map<String, Long> selectSentence(String sentence) {
         //use ai
         Map<String, Long> map = new HashMap<>();
         //단어와 비디오 아이디 매핑
@@ -68,22 +68,12 @@ public class StudyService {
 
     public Map<Long, String> findSentence(String concern) {
         List<Sentence> list = sentenceRepository.findByConcern(Concern.valueOf(concern));
-        Map<Long, String> map = new HashMap<>();
-        for(Sentence sentence : list){
-            map.put(sentence.getId(), sentence.getSentence());
-        }
-
-        return map;
+        return list.stream().collect(HashMap::new, (m, v) -> m.put(v.getId(), v.getSentence()), HashMap::putAll);
     }
 
     public Map<Long, String> getScriptList() {
         List<ScriptProjection> list = scriptRepository.findAllScriptProjection();
-        Map<Long, String> map = new HashMap<>();
-        for(ScriptProjection script : list){
-            map.put(script.getId(), script.getScript());
-        }
-
-        return map;
+        return list.stream().collect(HashMap::new, (m, v) -> m.put(v.getId(), v.getTitle()), HashMap::putAll);
     }
 
     public List<String> getScript(Long scriptId) {
