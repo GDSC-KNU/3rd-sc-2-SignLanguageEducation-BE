@@ -2,6 +2,7 @@ package gdsc3rdsc2.SignLanguageEducation.service;
 
 import gdsc3rdsc2.SignLanguageEducation.domain.User;
 import gdsc3rdsc2.SignLanguageEducation.domain.dto.TokenResponse;
+import gdsc3rdsc2.SignLanguageEducation.domain.dto.UserInfoResponse;
 import gdsc3rdsc2.SignLanguageEducation.repository.UserRepository;
 import gdsc3rdsc2.SignLanguageEducation.util.JwtTokenUtil;
 import jakarta.transaction.Transactional;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserService {
 
@@ -28,7 +30,6 @@ public class UserService {
     @Value("${jwt.refresh-token.expiration}")
     private Long refreshTokenExpireTimeMs;
 
-    @Transactional
     public void join(String userName, String password){
 
         userRepository.findByUserName(userName)
@@ -43,7 +44,6 @@ public class UserService {
         userRepository.save(user);
     }
 
-    @Transactional
     public TokenResponse login(String userName, String password){
         User selectedUser = userRepository.findByUserName(userName)
                 .orElseThrow(() -> new RuntimeException("해당하는 회원이 존재하지 않습니다."));
@@ -61,7 +61,6 @@ public class UserService {
         return new TokenResponse(accessToken,refreshToken);
     }
 
-    @Transactional
     public void delete(String userName, String password){
         User selectedUser = userRepository.findByUserName(userName)
                 .orElseThrow(() -> new RuntimeException("해당하는 회원이 존재하지 않습니다."));
@@ -73,7 +72,6 @@ public class UserService {
         userRepository.delete(selectedUser);
     }
 
-    @Transactional
     public TokenResponse refresh(String refreshToken) {
         String userName = JwtTokenUtil.getUserName(refreshToken, key);
         User selectedUser = userRepository.findByUserName(userName)
@@ -90,5 +88,17 @@ public class UserService {
         selectedUser.updateRefreshToken(newRefreshToken);
 
         return new TokenResponse(accessToken,newRefreshToken);
+    }
+
+    public Boolean idCheck(String id) {
+        return userRepository.findByUserName(id).isPresent();
+    }
+
+    public UserInfoResponse info(String token) {
+        String userName = JwtTokenUtil.getUserName(token,key);
+        User selectedUser = userRepository.findByUserName(userName)
+                .orElseThrow(() -> new RuntimeException("해당하는 회원이 존재하지 않습니다."));
+
+        return new UserInfoResponse(selectedUser.getId(),selectedUser.getUserName(),selectedUser.getPassword(),selectedUser.getScriptIds(),selectedUser.getSentenceIds());
     }
 }
