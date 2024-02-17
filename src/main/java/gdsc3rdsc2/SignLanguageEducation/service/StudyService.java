@@ -72,7 +72,7 @@ public class StudyService {
     }
 
     public Map<Long, String> getScriptList() {
-        List<ScriptProjection> list = scriptRepository.findAllScriptProjection();
+        List<ScriptProjection> list = scriptRepository.findAllBy();
         return list.stream().collect(HashMap::new, (m, v) -> m.put(v.getId(), v.getTitle()), HashMap::putAll);
     }
 
