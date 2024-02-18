@@ -92,12 +92,12 @@ public class StudyService {
         return list.stream().collect(HashMap::new, (m, v) -> m.put(v.getId(), v.getSentence()), HashMap::putAll);
     }
 
-//    public Map<Long, String> getScriptList() {
-//        List<ScriptProjection> list = scriptRepository.findAllScriptProjection();
-//        return list.stream().collect(HashMap::new, (m, v) -> m.put(v.getId(), v.getTitle()), HashMap::putAll);
-//    }
-//
-//    public List<String> getScript(Long scriptId) {
-//        return scriptRepository.findById(scriptId).get().getSentences();
-//    }
+    public Map<Long, String> getScriptList() {
+        List<ScriptProjection> list = scriptRepository.findAllBy();
+        return list.stream().collect(HashMap::new, (m, v) -> m.put(v.getId(), v.getTitle()), HashMap::putAll);
+    }
+
+    public List<String> getScript(Long scriptId) {
+        return scriptRepository.findById(scriptId).get().getSentences();
+    }
 }
