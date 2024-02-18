@@ -21,19 +21,19 @@ public class StudyController {
     }
 
     @PostMapping("/sentence")
-    public Map<String, Long> selectSentence(@RequestBody String sentence){
+    public Map<String, String> selectSentence(@RequestBody String sentence){
         return studyService.selectSentence(sentence);
     }
 
-    @GetMapping("/script")
-    public Map<Long, String> getScriptList(){
-        return studyService.getScriptList();
-    }
-
-    @GetMapping("/script/{scriptId}")
-    public List<String> getScript(@PathVariable Long scriptId){
-        return studyService.getScript(scriptId);
-    }
+//    @GetMapping("/script")
+//    public Map<Long, String> getScriptList(){
+//        return studyService.getScriptList();
+//    }
+//
+//    @GetMapping("/script/{scriptId}")
+//    public List<String> getScript(@PathVariable Long scriptId){
+//        return studyService.getScript(scriptId);
+//    }
 
 
     @GetMapping("/video/{videoId}")

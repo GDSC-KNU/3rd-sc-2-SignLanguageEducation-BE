@@ -1,23 +1,25 @@
 package gdsc3rdsc2.SignLanguageEducation.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import gdsc3rdsc2.SignLanguageEducation.domain.Sentence;
 import gdsc3rdsc2.SignLanguageEducation.domain.Video;
 import gdsc3rdsc2.SignLanguageEducation.domain.domainenum.Concern;
 import gdsc3rdsc2.SignLanguageEducation.domain.projection.ScriptProjection;
-import gdsc3rdsc2.SignLanguageEducation.repository.ScriptRepository;
+//import gdsc3rdsc2.SignLanguageEducation.repository.ScriptRepository;
 import gdsc3rdsc2.SignLanguageEducation.repository.SentenceRepository;
 import gdsc3rdsc2.SignLanguageEducation.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
+import org.python.util.PythonInterpreter;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.HttpRange;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.*;
 
 @Service
 @Transactional
@@ -25,15 +27,34 @@ import java.util.Optional;
 public class StudyService {
     private final VideoRepository videoRepository;
     private final SentenceRepository sentenceRepository;
-    private final ScriptRepository scriptRepository;
+    //private final ScriptRepository scriptRepository;
+    private static ProcessBuilder processBuilder;
 
     final long CHUNK_SIZE = 1000000L;
 
-    public Map<String, Long> selectSentence(String sentence) {
+    public Map<String, String> selectSentence(String sentence) {
         //use ai
-        Map<String, Long> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
         //단어와 비디오 아이디 매핑
+        processBuilder = new ProcessBuilder("python", "src/main/java/gdsc3rdsc2/SignLanguageEducation/AI/main.py",sentence);
+        try {
+            Process process = processBuilder.start();
+            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
+            String line;
+            ObjectMapper mapper = new ObjectMapper();
+
+            while ((line = br.readLine()) != null) {
+                line = line.replaceAll("[\\[\\]']", "");
+                List<String> words = Arrays.asList(line.split(",\\s*"));
+                for(int i=0;i<words.size();i+=2){
+                    map.put(words.get(i), words.get(i+1));
+                }
+            }
+            process.destroy();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return map;
     }
 
@@ -71,12 +92,12 @@ public class StudyService {
         return list.stream().collect(HashMap::new, (m, v) -> m.put(v.getId(), v.getSentence()), HashMap::putAll);
     }
 
-    public Map<Long, String> getScriptList() {
-        List<ScriptProjection> list = scriptRepository.findAllScriptProjection();
-        return list.stream().collect(HashMap::new, (m, v) -> m.put(v.getId(), v.getTitle()), HashMap::putAll);
-    }
-
-    public List<String> getScript(Long scriptId) {
-        return scriptRepository.findById(scriptId).get().getSentences();
-    }
+//    public Map<Long, String> getScriptList() {
+//        List<ScriptProjection> list = scriptRepository.findAllScriptProjection();
+//        return list.stream().collect(HashMap::new, (m, v) -> m.put(v.getId(), v.getTitle()), HashMap::putAll);
+//    }
+//
+//    public List<String> getScript(Long scriptId) {
+//        return scriptRepository.findById(scriptId).get().getSentences();
+//    }
 }
