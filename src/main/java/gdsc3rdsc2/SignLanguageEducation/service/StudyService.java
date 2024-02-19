@@ -7,10 +7,10 @@ import gdsc3rdsc2.SignLanguageEducation.domain.Video;
 import gdsc3rdsc2.SignLanguageEducation.domain.domainenum.Concern;
 import gdsc3rdsc2.SignLanguageEducation.domain.projection.ScriptProjection;
 //import gdsc3rdsc2.SignLanguageEducation.repository.ScriptRepository;
+import gdsc3rdsc2.SignLanguageEducation.repository.ScriptRepository;
 import gdsc3rdsc2.SignLanguageEducation.repository.SentenceRepository;
 import gdsc3rdsc2.SignLanguageEducation.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
-import org.python.util.PythonInterpreter;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.HttpRange;
@@ -27,7 +27,7 @@ import java.util.*;
 public class StudyService {
     private final VideoRepository videoRepository;
     private final SentenceRepository sentenceRepository;
-    //private final ScriptRepository scriptRepository;
+    private final ScriptRepository scriptRepository;
     private static ProcessBuilder processBuilder;
 
     final long CHUNK_SIZE = 1000000L;
