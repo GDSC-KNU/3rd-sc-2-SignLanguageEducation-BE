@@ -3,6 +3,7 @@ package gdsc3rdsc2.SignLanguageEducation.postconstruct;
 import gdsc3rdsc2.SignLanguageEducation.domain.Sentence;
 import gdsc3rdsc2.SignLanguageEducation.domain.domainenum.Concern;
 import gdsc3rdsc2.SignLanguageEducation.repository.SentenceRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import java.util.List;
 public class SentenceConstruct {
     private final SentenceRepository sentenceRepository;
 
+    @PostConstruct
     public void init(){
         log.info("SentenceConstruct init");
 
