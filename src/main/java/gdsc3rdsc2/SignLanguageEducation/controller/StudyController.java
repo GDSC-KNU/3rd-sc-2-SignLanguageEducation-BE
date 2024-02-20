@@ -25,15 +25,15 @@ public class StudyController {
         return studyService.selectSentence(sentence);
     }
 
-//    @GetMapping("/script")
-//    public Map<Long, String> getScriptList(){
-//        return studyService.getScriptList();
-//    }
-//
-//    @GetMapping("/script/{scriptId}")
-//    public List<String> getScript(@PathVariable Long scriptId){
-//        return studyService.getScript(scriptId);
-//    }
+    @GetMapping("/script")
+    public Map<Long, String> getScriptList(){
+        return studyService.getScriptList();
+    }
+
+    @GetMapping("/script/{scriptId}")
+    public List<String> getScript(@PathVariable Long scriptId){
+        return studyService.getScript(scriptId);
+    }
 
 
     @GetMapping("/video/{videoId}")
