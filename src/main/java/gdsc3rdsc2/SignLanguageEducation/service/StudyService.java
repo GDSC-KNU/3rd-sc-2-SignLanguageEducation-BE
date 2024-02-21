@@ -27,13 +27,25 @@ public class StudyService {
 
     final long CHUNK_SIZE = 1000000L;
 
-    public Map<String, String> selectSentence(String sentence) {
+    public Map<String, String> selectSentence(Long id) {
+        Map<String,String> a = new HashMap<>();
+
+        sentenceRepository.findById(id).ifPresent(sentence -> {
+            a.putAll(analyzeSentence(sentence.getSentence()));
+        });
+
+        return a;
+    }
+
+    public Map<String, String> analyzeSentence(String sentence) {
         //use ai
         Map<String, String> map = new HashMap<>();
         //단어와 비디오 아이디 매핑
-        processBuilder = new ProcessBuilder("python", "src/main/java/gdsc3rdsc2/SignLanguageEducation/AI/main.py",sentence);
+        processBuilder = new ProcessBuilder("python","src/main/java/gdsc3rdsc2/SignLanguageEducation/AI/main.py",sentence);
+        processBuilder.redirectErrorStream(true);
         try {
             Process process = processBuilder.start();
+
             BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
             String line;
@@ -46,9 +58,12 @@ public class StudyService {
                     map.put(words.get(i), words.get(i+1));
                 }
             }
-            process.destroy();
+
+            //process.destroy();
+            int exitCode = process.waitFor();
         } catch (Exception e) {
             e.printStackTrace();
+            //System.out.println(e.getMessage());
         }
         return map;
     }
@@ -94,5 +109,10 @@ public class StudyService {
 
     public List<String> getScript(Long scriptId) {
         return scriptRepository.findById(scriptId).get().getSentences();
+    }
+
+    public Map<String, String> getScriptToVideo(Long scriptId, Long sentenceId) {
+        Map<String, String> map = new HashMap<>();
+        return analyzeSentence(getScript(scriptId).get(Math.toIntExact(sentenceId)));
     }
 }

@@ -7,5 +7,6 @@ public enum Concern {
     COOKING,
     MOVIE,
     MUSIC,
-    GAME
+    GAME,
+    TRANSPORTATION,
 }

@@ -16,13 +16,17 @@ public class StudyController {
     private final StudyService studyService;
 
     @GetMapping("/sentence/{concern}")
-    public Map<Long, String> findSentence(@PathVariable String concern){
+    public Map<Long, String> findSentence(@PathVariable(value = "concern") String concern){
         return studyService.findSentence(concern);
     }
 
-    @PostMapping("/sentence")
-    public Map<String, String> selectSentence(@RequestBody String sentence){
-        return studyService.selectSentence(sentence);
+    @GetMapping("/sentence")
+    public Map<String, String> selectSentence(@RequestParam(value = "id") Long id){
+        return studyService.selectSentence(id);
+    }
+    @PostMapping("/sentenceTest")
+    public Map<String, String> selectSentence2(@RequestBody String sentence){
+        return studyService.analyzeSentence(sentence);
     }
 
     @GetMapping("/script")
@@ -31,8 +35,13 @@ public class StudyController {
     }
 
     @GetMapping("/script/{scriptId}")
-    public List<String> getScript(@PathVariable Long scriptId){
+    public List<String> getScript(@PathVariable(value = "scriptId") Long scriptId){
         return studyService.getScript(scriptId);
+    }
+
+    @GetMapping("/script/{scriptId}/{sentenceId}")
+    public Map<String,String> getScriptToVideo(@PathVariable(value = "scriptId") Long scriptId, @PathVariable(value = "sentenceId") Long sentenceId){
+        return studyService.getScriptToVideo(scriptId, sentenceId);
     }
 
 

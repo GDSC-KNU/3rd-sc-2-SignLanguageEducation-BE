@@ -67,6 +67,27 @@ public class ScriptConstruct {
                 ))
                 .build();
 
-        scriptRepository.saveAll(List.of(script1, script2, script3, script4));
+        Script script5 = Script.builder()
+                .title("시청 가는 길 묻기")
+                .sentences(List.of(
+                        "시청에 가려면 어느 버스를 타야해?",
+                        "바로 다음에 오는 버스를 타면 돼.",
+                        "내리고 바로 좌회전 하면 있어.",
+                        "오케이, 그럼 시청 뒤 카페에서 만나자"
+                ))
+                .build();
+
+        Script script6 = Script.builder()
+                .title("명동 가는 길 묻기")
+                .sentences(List.of(
+                        "저가 대구 사람이라 서울은 잘 모르는데",
+                        "명동은 어디로 가야하나요?",
+                        "기차에서 내리고 다음 지하철로 갈아타셔서 명동 역에서 내리세요.",
+                        "내리고 바로 좌회전 하면 있어요.",
+                        "감사합니다!"
+                ))
+                .build();
+
+        scriptRepository.saveAll(List.of(script1, script2, script3, script4, script5, script6));
     }
 }

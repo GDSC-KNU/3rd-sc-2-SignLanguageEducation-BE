@@ -35,6 +35,15 @@ public class SentenceConstruct {
                 .sentence("농구 경기를 직접 보는건 즐거워")
                 .build();
 
-        sentenceRepository.saveAll(List.of(sentence1, sentence2, sentence3));
+        Sentence sentence4 = Sentence.builder()
+                .concern(Concern.TRANSPORTATION)
+                .sentence("여기에서 버스로 갈아타야해")
+                .build();
+
+        Sentence sentence5 = Sentence.builder()
+                .concern(Concern.TRANSPORTATION)
+                .sentence("사거리에서 좌회전 해야해요")
+                .build();
+        sentenceRepository.saveAll(List.of(sentence1, sentence2, sentence3, sentence4, sentence5));
     }
 }
