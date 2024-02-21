@@ -44,7 +44,7 @@ def id_info(finalwordlist): #해당 영상 정보 반환
     copy = list(finalwordlist)
     temp = []
     final_ID = [] #단어 리스트에 대응하는 영상 정보
-    adr = 'src/main/java/gdsc3rdsc2/SignLanguageEducation/AI/morpheme' #경로 변경 필요
+    adr = 'C:/Users/SCIENCE/Desktop/morpheme' #경로 변경 필요
 
     dir_list = os.listdir(adr)
 
@@ -53,7 +53,7 @@ def id_info(finalwordlist): #해당 영상 정보 반환
         file_list = os.listdir(adr2)
         for file in file_list: #dir 내 파일 검색
             adr3 = adr2 + '/' + file
-            
+
             with open(adr3, 'r', encoding='UTF-8') as f: #morpheme.json 열기
                 json_data = json.load(f)
 
@@ -78,10 +78,12 @@ def id_info(finalwordlist): #해당 영상 정보 반환
                             newlist.append(filenum)
                         copy.remove(word)
                         temp.append(newlist)
-    for w in finalwordlist: #순서 정렬
-        for id in temp:
-            if id[0] == w:
-                final_ID.append(id)
+                    if(len(copy) == 0):
+                        for w in finalwordlist: #순서 정렬
+                            for id in temp:
+                                if id[0] == w:
+                                    final_ID.append(id)
+                        return final_ID
     return final_ID
 
 

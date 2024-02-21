@@ -35,7 +35,6 @@ public class StudyService {
         Map<String,String> a = new HashMap<>();
 
         sentenceRepository.findById(id).ifPresent(sentence -> {
-            System.out.println(sentence.getSentence());
             a.putAll(analyzeSentence(sentence.getSentence()));
         });
 
@@ -46,7 +45,7 @@ public class StudyService {
         //use ai
         Map<String, String> map = new HashMap<>();
         //단어와 비디오 아이디 매핑
-        processBuilder = new ProcessBuilder("C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python38\\python.exe","C:\\Users\\USER\\Documents\\GitHub\\3rd-sc-2-SignLanguageEducation-BE\\src\\main\\java\\gdsc3rdsc2\\SignLanguageEducation\\AI\\main.py",sentence);
+        processBuilder = new ProcessBuilder("python","src/main/java/gdsc3rdsc2/SignLanguageEducation/AI/main.py",sentence);
         processBuilder.redirectErrorStream(true);
         try {
             Process process = processBuilder.start();
@@ -59,7 +58,6 @@ public class StudyService {
             while ((line = br.readLine()) != null) {
                 line = line.replaceAll("[\\[\\]']", "");
                 List<String> words = Arrays.asList(line.split(",\\s*"));
-
                 for(int i=0;i<words.size();i+=2){
                     map.put(words.get(i), words.get(i+1));
                 }
