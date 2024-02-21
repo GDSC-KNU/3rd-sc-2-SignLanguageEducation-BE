@@ -1,6 +1,5 @@
 package gdsc3rdsc2.SignLanguageEducation.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gdsc3rdsc2.SignLanguageEducation.domain.Sentence;
 import gdsc3rdsc2.SignLanguageEducation.domain.Video;
@@ -32,13 +31,26 @@ public class StudyService {
 
     final long CHUNK_SIZE = 1000000L;
 
-    public Map<String, String> selectSentence(String sentence) {
+    public Map<String, String> selectSentence(Long id) {
+        Map<String,String> a = new HashMap<>();
+
+        sentenceRepository.findById(id).ifPresent(sentence -> {
+            System.out.println(sentence.getSentence());
+            a.putAll(analyzeSentence(sentence.getSentence()));
+        });
+
+        return a;
+    }
+
+    public Map<String, String> analyzeSentence(String sentence) {
         //use ai
         Map<String, String> map = new HashMap<>();
         //단어와 비디오 아이디 매핑
-        processBuilder = new ProcessBuilder("python", "src/main/java/gdsc3rdsc2/SignLanguageEducation/AI/main.py",sentence);
+        processBuilder = new ProcessBuilder("C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python38\\python.exe","C:\\Users\\USER\\Documents\\GitHub\\3rd-sc-2-SignLanguageEducation-BE\\src\\main\\java\\gdsc3rdsc2\\SignLanguageEducation\\AI\\main.py",sentence);
+        processBuilder.redirectErrorStream(true);
         try {
             Process process = processBuilder.start();
+
             BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
             String line;
@@ -47,13 +59,17 @@ public class StudyService {
             while ((line = br.readLine()) != null) {
                 line = line.replaceAll("[\\[\\]']", "");
                 List<String> words = Arrays.asList(line.split(",\\s*"));
+
                 for(int i=0;i<words.size();i+=2){
                     map.put(words.get(i), words.get(i+1));
                 }
             }
-            process.destroy();
+
+            //process.destroy();
+            int exitCode = process.waitFor();
         } catch (Exception e) {
             e.printStackTrace();
+            //System.out.println(e.getMessage());
         }
         return map;
     }

@@ -16,13 +16,17 @@ public class StudyController {
     private final StudyService studyService;
 
     @GetMapping("/sentence/{concern}")
-    public Map<Long, String> findSentence(@PathVariable String concern){
+    public Map<Long, String> findSentence(@PathVariable(value = "concern") String concern){
         return studyService.findSentence(concern);
     }
 
-    @PostMapping("/sentence")
-    public Map<String, String> selectSentence(@RequestBody String sentence){
-        return studyService.selectSentence(sentence);
+    @GetMapping("/sentence")
+    public Map<String, String> selectSentence(@RequestParam(value = "id") Long id){
+        return studyService.selectSentence(id);
+    }
+    @PostMapping("/sentenceTest")
+    public Map<String, String> selectSentence2(@RequestBody String sentence){
+        return studyService.analyzeSentence(sentence);
     }
 
     @GetMapping("/script")
