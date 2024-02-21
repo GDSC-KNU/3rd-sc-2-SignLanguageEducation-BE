@@ -1,15 +1,11 @@
 package gdsc3rdsc2.SignLanguageEducation.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gdsc3rdsc2.SignLanguageEducation.domain.Sentence;
-import gdsc3rdsc2.SignLanguageEducation.domain.Video;
 import gdsc3rdsc2.SignLanguageEducation.domain.domainenum.Concern;
 import gdsc3rdsc2.SignLanguageEducation.domain.projection.ScriptProjection;
-//import gdsc3rdsc2.SignLanguageEducation.repository.ScriptRepository;
 import gdsc3rdsc2.SignLanguageEducation.repository.ScriptRepository;
 import gdsc3rdsc2.SignLanguageEducation.repository.SentenceRepository;
-import gdsc3rdsc2.SignLanguageEducation.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
@@ -25,7 +21,6 @@ import java.util.*;
 @Transactional
 @RequiredArgsConstructor
 public class StudyService {
-    private final VideoRepository videoRepository;
     private final SentenceRepository sentenceRepository;
     private final ScriptRepository scriptRepository;
     private static ProcessBuilder processBuilder;
@@ -58,13 +53,13 @@ public class StudyService {
         return map;
     }
 
-    public ResourceRegion getVideo(Long videoId, Optional<HttpRange> range){
-        Video video = videoRepository.findById(videoId).get();
+    public ResourceRegion getVideo(String videoId, Optional<HttpRange> range){
+        String url = "file:///C:/Users/gyu27/IdeaProjects/3rd-sc-2-SignLanguageEducation-BE/video" + "/NIA_SL_" + videoId + "_F.mp4";
 
         UrlResource videoResource = null;
         long contentLength = 0;
         try {
-            videoResource = new UrlResource(video.getUrl());
+            videoResource = new UrlResource(url);
             contentLength = videoResource.contentLength();
         } catch (Exception e) {
             throw new RuntimeException(e);
