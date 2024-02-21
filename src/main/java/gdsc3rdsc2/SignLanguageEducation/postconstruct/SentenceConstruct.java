@@ -36,14 +36,14 @@ public class SentenceConstruct {
                 .build();
 
         Sentence sentence4 = Sentence.builder()
-                .concern(Concern.BASKETBALL)
+                .concern(Concern.TRANSPORTATION)
                 .sentence("여기에서 버스로 갈아타야해")
                 .build();
 
         Sentence sentence5 = Sentence.builder()
-                        .concern(Concern.TRANSPORTATION)
-                        .sentence("사거리에서 좌회전 해야해요")
-                        .build();
+                .concern(Concern.TRANSPORTATION)
+                .sentence("사거리에서 좌회전 해야해요")
+                .build();
         sentenceRepository.saveAll(List.of(sentence1, sentence2, sentence3, sentence4, sentence5));
     }
 }
