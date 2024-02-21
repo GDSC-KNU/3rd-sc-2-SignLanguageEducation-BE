@@ -37,7 +37,7 @@ public class StudyController {
 
 
     @GetMapping("/video/{videoId}")
-    public ResponseEntity<ResourceRegion> getVideo(@PathVariable Long videoId, @RequestHeader HttpHeaders headers){
+    public ResponseEntity<ResourceRegion> getVideo(@PathVariable String videoId, @RequestHeader HttpHeaders headers){
         Optional<HttpRange> range = headers.getRange().stream().findFirst();
         ResourceRegion resourceRegion = studyService.getVideo(videoId, range);
 
