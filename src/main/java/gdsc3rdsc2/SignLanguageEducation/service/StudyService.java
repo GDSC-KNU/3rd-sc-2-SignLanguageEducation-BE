@@ -114,4 +114,9 @@ public class StudyService {
     public List<String> getScript(Long scriptId) {
         return scriptRepository.findById(scriptId).get().getSentences();
     }
+
+    public Map<String, String> getScriptToVideo(Long scriptId, Long sentenceId) {
+        Map<String, String> map = new HashMap<>();
+        return analyzeSentence(getScript(scriptId).get(Math.toIntExact(sentenceId)));
+    }
 }

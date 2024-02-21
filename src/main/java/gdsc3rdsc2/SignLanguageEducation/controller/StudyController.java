@@ -35,8 +35,13 @@ public class StudyController {
     }
 
     @GetMapping("/script/{scriptId}")
-    public List<String> getScript(@PathVariable Long scriptId){
+    public List<String> getScript(@PathVariable(value = "scriptId") Long scriptId){
         return studyService.getScript(scriptId);
+    }
+
+    @GetMapping("/script/{scriptId}/{sentenceId}")
+    public Map<String,String> getScriptToVideo(@PathVariable(value = "scriptId") Long scriptId, @PathVariable(value = "sentenceId") Long sentenceId){
+        return studyService.getScriptToVideo(scriptId, sentenceId);
     }
 
 
