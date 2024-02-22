@@ -68,14 +68,14 @@ def id_info(finalwordlist): #해당 영상 정보 반환
                             newlist.append(word)
                             #newlist.append(file)
                             #newlist.append(dirnum)
-                            newlist.append(filenum)
+                            newlist.append(filenum+"_"+dirnum)
                             #newlist.append(data['start'])
                             #newlist.append(data['end'])
                         else:
                             newlist.append(word)
                             #newlist.append(file)
                             #newlist.append(dirnum)
-                            newlist.append(filenum)
+                            newlist.append(filenum+"_"+dirnum)
                         copy.remove(word)
                         temp.append(newlist)
                     if(len(copy) == 0):
